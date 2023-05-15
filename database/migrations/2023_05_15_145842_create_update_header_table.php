@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('level')->default('user');
+        Schema::create('update_header', function (Blueprint $table) {
+            $table->increments('internal_id');
+            $table->string('update_id')->unique();
+            $table->date('date_update_created');
+            $table->string('desc');
+            $table->timestamps();
         });
     }
 
@@ -21,9 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('level');
-            $table->dropColumn('levels');
-        });
+        Schema::dropIfExists('update_header');
     }
 };

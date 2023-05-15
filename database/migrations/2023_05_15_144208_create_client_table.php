@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('level')->default('user');
+        Schema::create('master_client', function (Blueprint $table) {
+            $table->increments('internal_id');
+            $table->string('client_id')->unique();
+            $table->string('address');
+            $table->string('owner');
+            $table->date('join_date');
+            $table->timestamps();
         });
     }
 
@@ -21,9 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('level');
-            $table->dropColumn('levels');
-        });
+        Schema::dropIfExists('master_client');
     }
 };
